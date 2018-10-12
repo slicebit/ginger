@@ -13,8 +13,8 @@ func NewConfig(cfgFile string) (*viper.Viper, error) {
 }
 
 // NewApp creates a new gin app given config file
-func NewApp(config *viper.Viper) (*app.App, error) {
-	return app.New(config)
+func NewApp(host string, port int, env string) (*app.App, error) {
+	return app.New(host, port, env)
 }
 
 // NewDB creates a new db context given driver & dsn

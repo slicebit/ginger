@@ -7,11 +7,10 @@ import (
 
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
-	"github.com/spf13/viper"
 )
 
 // New creates a new core app
-func New(config *viper.Viper) (*App, error) {
+func New(host string, port int, env string) (*App, error) {
 
 	router := gin.Default()
 
@@ -19,23 +18,25 @@ func New(config *viper.Viper) (*App, error) {
 	router.Use(cors.Default())
 
 	return &App{
-		Router: router,
-		Config: config,
+		Host:        host,
+		Port:        port,
+		Environment: env,
+		Router:      router,
 	}, nil
 }
 
 // App is the base struct for web api  app
 type App struct {
-	Router *gin.Engine
-	Config *viper.Viper
+	Host        string
+	Port        int
+	Environment string
+	Router      *gin.Engine
 }
 
 // Start starts the app
 func (app *App) Start() {
-	host := app.Config.GetString("http.host")
-	port := app.Config.GetInt("http.port")
 
-	err := http.ListenAndServe(fmt.Sprintf("%s:%d", host, port), app.Router)
+	err := http.ListenAndServe(fmt.Sprintf("%s:%d", app.Host, app.Port), app.Router)
 	if err != nil {
 		log.Fatal(err)
 	}
