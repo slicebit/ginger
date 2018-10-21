@@ -5,11 +5,13 @@ import (
 )
 
 // New creates an instance of config given path
-func New(cfgFile string) (*viper.Viper, error) {
+func New(cfgFile string, config interface{}) error {
+	viper.SetConfigFile(cfgFile)
 
-	config := viper.New()
-	config.SetConfigFile(cfgFile)
-
-	err := config.ReadInConfig()
-	return config, err
+	err := viper.ReadInConfig()
+	if err != nil {
+		return err
+	}
+	err = viper.Unmarshal(config)
+	return err
 }

@@ -4,12 +4,11 @@ import (
 	"github.com/slicebit/ginger/app"
 	"github.com/slicebit/ginger/config"
 	"github.com/slicebit/ginger/db"
-	"github.com/spf13/viper"
 )
 
 // NewConfig creates a new configuration
-func NewConfig(cfgFile string) (*viper.Viper, error) {
-	return config.New(cfgFile)
+func NewConfig(cfgFile string, cfg interface{}) error {
+	return config.New(cfgFile, cfg)
 }
 
 // NewApp creates a new gin app given config file
