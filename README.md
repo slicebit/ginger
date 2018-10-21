@@ -9,14 +9,21 @@ import(
     "github.com/slicebit/ginger"
 )
 
+type Config struct {
+    Host string
+    Port int
+    Env string
+}
+
 func main() {
 
-    config, err := ginger.NewConfig("config.toml")
+    config := &Config{}
+    err := ginger.NewConfig("config.json", config)
     if err != nil {
         panic(err)
     }
 
-    app, err := ginger.NewApp(config)
+    app, err := ginger.NewApp(config.Host, config.Port, config.Env)
     if err != nil {
         panic(err)
     }
