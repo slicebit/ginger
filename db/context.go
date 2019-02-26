@@ -1,7 +1,7 @@
 package db
 
 import (
-	"github.com/aacanakin/qb"
+	"github.com/slicebit/qb"
 )
 
 // New returns a db context given driver & dsn
